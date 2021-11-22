@@ -1,4 +1,7 @@
-<template></template>
+<template>
+  <h1>Student Courses</h1>
+  <router-view></router-view>
+</template>
 
 <script>
 export default {
