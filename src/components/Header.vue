@@ -3,10 +3,10 @@
     <nav>
       <router-link to="/"><h1>Student Courses API</h1></router-link>
       <div class="btn-wrapper">
-        <router-link to="/login">
-          <button class="btn btn--login">Log In</button>
-        </router-link>
-        <button class="btn btn--register">Register</button>
+        <router-link class="btn btn--login" to="/login">Log In</router-link>
+        <router-link class="btn btn--register" to="/register"
+          >Sign Up</router-link
+        >
       </div>
     </nav>
   </header>
