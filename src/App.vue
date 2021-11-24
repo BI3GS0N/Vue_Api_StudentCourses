@@ -8,21 +8,25 @@
 <script>
 import Header from "@/components/Header.vue";
 
-import axios from "axios";
-
 export default {
   name: "App",
   components: {
     Header,
+  },
+  data() {
+    return {};
   },
 };
 </script>
 
 <style>
 @import url("https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700;900&display=swap");
+@import "./styles/form.css";
 :root {
-  --text-color: #ced4da;
-  --bg: #343a40;
+  --text-color-light: #ced4da;
+  --text-color-dark: #495057;
+  --bg-dark: #343a40;
+  --bg-light: #676c70;
   --accent-purple: #a100f2;
   --accent-pink: #f20089;
   --dark: #212529;
@@ -38,9 +42,9 @@ html {
 }
 body {
   min-height: 100vh;
-  background-color: var(--bg);
+  background: linear-gradient(135deg, var(--bg-light) 5%, var(--bg-dark) 55%);
   font-size: 1.6rem;
-  color: var(--text-color);
+  color: var(--text-color-light);
 }
 a {
   text-decoration: none;
@@ -49,6 +53,6 @@ a {
 .container {
   display: flex;
   flex-direction: column;
-  margin: 0 15rem;
+  margin: 0 20rem;
 }
 </style>

@@ -1,0 +1,82 @@
+.login-wrapper {
+    background-color: #ffffff6e;
+    padding: 7rem 5rem;
+    border-radius: 1.5rem;
+    margin: 0 auto;
+    width: 350px;
+    box-shadow: 0 0 30px #000;
+}
+
+.login-wrapper h2 {
+    display: inline-block;
+    background: linear-gradient(to right,
+            var(--accent-pink),
+            var(--accent-purple));
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 400;
+    font-size: 3rem;
+    margin-bottom: 4rem;
+}
+
+.login-wrapper form {
+    display: flex;
+    flex-direction: column;
+}
+
+.login-wrapper label {
+    position: relative;
+}
+
+.login-wrapper input {
+    width: 100%;
+    padding: 0.5rem;
+    background: transparent;
+    border: none;
+    color: var(--text-color-dark);
+    letter-spacing: 1px;
+    outline: none;
+    border-bottom: 1px solid var(--dark);
+    margin-bottom: 3rem;
+    transition: border 0.2s ease-out;
+}
+
+.login-wrapper input:focus {
+    border-bottom: 1px solid var(--accent-purple);
+}
+
+.login-wrapper input:focus+i {
+    color: var(--accent-purple);
+}
+
+.login-wrapper i {
+    position: absolute;
+    top: 0;
+    right: 0;
+    color: var(--bg-dark);
+    margin-left: 0.5rem;
+    transform: translateY(25%);
+}
+
+.login-wrapper button {
+    cursor: pointer;
+    border-radius: 2rem;
+    align-self: flex-end;
+    padding: 0.5rem 2rem;
+    font-size: 1.8rem;
+    letter-spacing: 2px;
+    margin-top: 3rem;
+    background: linear-gradient(to right,
+            var(--accent-pink),
+            var(--accent-purple));
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    transition: transform 0.2s ease-out;
+    border: 1px solid var(--dark);
+}
+
+.login-wrapper button:hover {
+    transform: scale(0.95);
+}

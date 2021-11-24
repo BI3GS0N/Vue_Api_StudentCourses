@@ -42,85 +42,13 @@ export default {
       );
       const data = await res.data;
       localStorage.setItem("token", data.message);
-      if (res.status == 200) this.$router.push("/");
+      if (res.status == 200) {
+        this.$router.push("/");
+      }
     },
   },
 };
 </script>
 
-<style scoped>
-.login-wrapper {
-  background-color: #2125293a;
-  padding: 7rem 5rem;
-  border-radius: 1.5rem;
-  margin: 0 auto;
-  width: 350px;
-  box-shadow: 0 0 30px #000;
-}
-h2 {
-  display: inline-block;
-  background: linear-gradient(
-    to right,
-    var(--accent-pink),
-    var(--accent-purple)
-  );
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  font-weight: 400;
-  font-size: 3rem;
-  margin-bottom: 4rem;
-}
-form {
-  display: flex;
-  flex-direction: column;
-}
-label {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 1px solid var(--dark);
-  margin-bottom: 3rem;
-  cursor: text;
-}
-input {
-  width: 100%;
-  padding: 0.5rem;
-  background: transparent;
-  border: none;
-  border-right: 2px solid transparent;
-  color: var(--text-color);
-  letter-spacing: 1px;
-  outline: none;
-}
-input:focus {
-  border-right: 2px solid var(--accent-purple);
-}
-i {
-  color: var(--text-color);
-  margin-left: 0.5rem;
-}
-button {
-  cursor: pointer;
-  border-radius: 2rem;
-  align-self: flex-end;
-  padding: 0.5rem 2rem;
-  font-size: 1.8rem;
-  color: var(--dark);
-  letter-spacing: 2px;
-  margin-top: 3rem;
-  background: linear-gradient(
-    to right,
-    var(--accent-pink),
-    var(--accent-purple)
-  );
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  transition: transform 0.4s ease-out;
-  border: 1px solid var(--dark);
-}
-button:hover {
-  transform: scale(0.95);
-}
+<style>
 </style>

@@ -1,5 +1,4 @@
 <template>
-  <button @click="getCourses">Get Courses</button>
   <ul>
     <li v-for:="course in courses">{{ course.title }}</li>
   </ul>
