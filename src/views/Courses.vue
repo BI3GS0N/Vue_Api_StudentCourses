@@ -22,11 +22,13 @@ export default {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         });
-        const data = res.data;
-        console.log(data);
+
+        if (res.status === 401) {
+          console.log("kurwa");
+        }
+
         const resCourses = res.data.records;
         this.courses = resCourses;
-        console.log(this.courses);
       } catch (e) {
         console.log(e);
       }

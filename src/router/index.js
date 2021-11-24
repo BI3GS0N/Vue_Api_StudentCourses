@@ -5,11 +5,17 @@ import {
 
 import Login from '../views/Login'
 import Courses from '../views/Courses'
+import Home from '@/views/Home'
 
 const routes = [{
-        path: '/',
+        path: '/login',
         name: 'Login',
         component: Login,
+    },
+    {
+        path: '/',
+        name: 'Home',
+        component: Home,
     },
     {
         path: '/courses',
