@@ -17,7 +17,9 @@
       <h3>Lista Egzaminów:</h3>
       <ul>
         <li v-for:="exam of exams">
-          {{ exam.description }}
+          <h4>{{ exam.description }}</h4>
+          <p>{{ exam.isPassed }}</p>
+          <button @click="passExam(exam)">Zdane</button>
         </li>
       </ul>
     </div>
@@ -26,6 +28,7 @@
 
 <script>
 import AddExam from "@/components/AddExam.vue";
+import axios from "axios";
 
 export default {
   name: "Courses",
@@ -41,6 +44,20 @@ export default {
   },
   props: ["courses"],
   methods: {
+    async passExam(exam) {
+      const id = exam.id;
+      const token = localStorage.getItem("token");
+
+      const res = await axios({
+        method: "put",
+        url: `https://zaliczenie.btry.eu/api/Exams/${id}`,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      const data = await res.data;
+      console.log(data);
+    },
     getExams(course) {
       this.exams = course.exams;
     },

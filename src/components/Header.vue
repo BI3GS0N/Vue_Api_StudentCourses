@@ -8,7 +8,9 @@
           Sign Up
         </router-link>
       </div>
-      <a href="/" class="btn--logout" @click="logout">Logout</a>
+      <a href="/" class="btn--logout" @click="logout" v-show="isLogged"
+        >Logout</a
+      >
     </nav>
   </header>
 </template>
@@ -21,6 +23,11 @@ export default {
   methods: {
     logout() {
       localStorage.removeItem("token");
+    },
+  },
+  computed: {
+    isLogged: function () {
+      return localStorage.getItem("token");
     },
   },
 };

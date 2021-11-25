@@ -103,6 +103,7 @@ export default {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   transition: transform 0.2s ease-out;
+  margin-bottom: 5rem;
 }
 .btn:hover {
   transform: scale(1.1);
