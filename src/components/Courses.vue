@@ -1,40 +1,55 @@
 <template>
-  <ul>
-    <li v-for:="course in courses">{{ course.title }}</li>
-  </ul>
+  <div class="wrapper">
+    <div class="left">
+      <h3>Lista kursów:</h3>
+      <ul>
+        <li v-for:="course of courses">
+          <h4>{{ course.title }}</h4>
+          <p>{{ course.description }}</p>
+          <button @click="getExams(course)">egzaminy</button>
+        </li>
+      </ul>
+    </div>
+    <div class="right">
+      <h3>Lista Egzaminów:</h3>
+      <ul>
+        <li v-for:="exam of exams">
+          {{ exam.description }}
+        </li>
+      </ul>
+    </div>
+  </div>
 </template>
 
 <script>
-import axios from "axios";
 export default {
   name: "Courses",
   data() {
     return {
-      courses: [],
+      exams: [],
     };
   },
+  props: ["courses"],
   methods: {
-    async getCourses() {
-      try {
-        const res = await axios.get("https://zaliczenie.btry.eu/api/Course", {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        });
-
-        if (res.status === 401) {
-          console.log("kurwa");
-        }
-
-        const resCourses = res.data.records;
-        this.courses = resCourses;
-      } catch (e) {
-        console.log(e);
-      }
+    getExams(course) {
+      this.exams = course.exams;
     },
   },
 };
 </script>
 
-<style>
+<style scoped>
+ul {
+  /* list-style: none; */
+}
+p {
+  font-size: 1.3rem;
+}
+.wrapper {
+  display: flex;
+}
+.left,
+.right {
+  flex: 1;
+}
 </style>

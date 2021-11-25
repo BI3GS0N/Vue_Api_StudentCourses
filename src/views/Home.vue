@@ -24,37 +24,38 @@
         <button @click="addCourse">Add Course</button>
       </form>
     </div>
-
-    <button @click="getCourses">Get courses</button>
+    <Courses :courses="courses" />
+    <!-- <Exams :exams="exams" /> -->
   </main>
   <main v-show="!isLogged">
-    <h1>Log in to do something</h1>
+    <h1>Log in to manage your courses and exams</h1>
   </main>
 </template>
 <script>
 import axios from "axios";
+
+import Courses from "@/components/Courses.vue";
+import Exams from "@/components/Exams.vue";
+
 export default {
   name: "Home",
+  components: {
+    Courses,
+    // Exams,
+  },
   data() {
     return {
       courseTitle: "",
       courseDescription: "",
+      courses: [],
+      exams: [],
     };
   },
   methods: {
-    async getCourses() {
-      const res = await axios.get("https://zaliczenie.btry.eu/api/Course", {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      });
-      const data = await res.data;
-      console.log(data);
-    },
     async addCourse(e) {
       e.preventDefault();
       const token = localStorage.getItem("token");
-      console.log(token);
+
       let formData = new FormData();
       formData.append("Title", this.courseTitle);
       formData.append("Description", this.courseDescription);
@@ -67,8 +68,24 @@ export default {
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log(res.data);
+      const data = await res.data;
+      console.log(data);
+      this.courses = [...this.courses, data.record];
     },
+  },
+  async created() {
+    if (this.isLogged) {
+      const res = await axios({
+        method: "get",
+        url: "https://zaliczenie.btry.eu/api/Course",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      const data = await res.data;
+      this.courses = data.records;
+      console.log(this.courses);
+    }
   },
   computed: {
     isLogged: function () {
