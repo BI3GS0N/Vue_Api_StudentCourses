@@ -1,20 +1,23 @@
 <template>
   <header>
     <nav>
-      <router-link to="/"><h1>Student Courses API</h1></router-link>
+      <a href="/"><h1>Student Courses API</h1></a>
       <div class="btn-wrapper">
         <router-link class="btn btn--login" to="/login">Log In</router-link>
         <router-link class="btn btn--register" to="/register">
           Sign Up
         </router-link>
       </div>
-      <a href="#" class="btn--logout" @click="logout">Logout</a>
+      <a href="/" class="btn--logout" @click="logout">Logout</a>
     </nav>
   </header>
 </template>
 <script>
 export default {
   name: "Header",
+  data() {
+    return {};
+  },
   methods: {
     logout() {
       localStorage.removeItem("token");

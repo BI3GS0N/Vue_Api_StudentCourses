@@ -1,80 +1,46 @@
 <template>
   <main v-show="isLogged">
-    <div class="login-wrapper">
-      <form action="#">
-        <h2>Add Course</h2>
-        <label for="Title">
-          <input
-            id="Title"
-            type="text"
-            placeholder="Course Title"
-            v-model="courseTitle"
-          />
-          <i class="fas fa-heading"></i>
-        </label>
-        <label for="Description">
-          <input
-            id="Description"
-            type="text"
-            placeholder="Course Description"
-            v-model="courseDescription"
-          />
-          <i class="fas fa-signature"></i>
-        </label>
-        <button @click="addCourse">Add Course</button>
-      </form>
-    </div>
-    <Courses :courses="courses" />
-    <!-- <Exams :exams="exams" /> -->
+    <button class="btn" @click="toggleAddCourse">Add New Course</button>
+    <AddCourse v-show="showAddCourse" @add-course="addCourse" />
+    <CoursesList :courses="courses" v-if="!loading" />
+    <div class="lds-dual-ring" v-else></div>
   </main>
   <main v-show="!isLogged">
     <h1>Log in to manage your courses and exams</h1>
   </main>
 </template>
+
 <script>
 import axios from "axios";
 
-import Courses from "@/components/Courses.vue";
-import Exams from "@/components/Exams.vue";
+import CoursesList from "@/components/CoursesList.vue";
+import AddCourse from "@/components/AddCourse.vue";
 
 export default {
   name: "Home",
   components: {
-    Courses,
-    // Exams,
+    CoursesList,
+    AddCourse,
   },
   data() {
     return {
-      courseTitle: "",
-      courseDescription: "",
       courses: [],
       exams: [],
+      loading: false,
+      showAddCourse: false,
     };
   },
   methods: {
-    async addCourse(e) {
-      e.preventDefault();
-      const token = localStorage.getItem("token");
-
-      let formData = new FormData();
-      formData.append("Title", this.courseTitle);
-      formData.append("Description", this.courseDescription);
-
-      const res = await axios({
-        method: "post",
-        url: "https://zaliczenie.btry.eu/api/Course",
-        data: formData,
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      const data = await res.data;
-      console.log(data);
-      this.courses = [...this.courses, data.record];
+    addCourse(newCourse) {
+      this.courses = [...this.courses, newCourse];
+    },
+    toggleAddCourse() {
+      this.showAddCourse = !this.showAddCourse;
     },
   },
   async created() {
     if (this.isLogged) {
+      this.loading = true;
       const res = await axios({
         method: "get",
         url: "https://zaliczenie.btry.eu/api/Course",
@@ -84,7 +50,7 @@ export default {
       });
       const data = await res.data;
       this.courses = data.records;
-      console.log(this.courses);
+      this.loading = false;
     }
   },
   computed: {
@@ -95,4 +61,50 @@ export default {
 };
 </script>
 <style scoped>
+.lds-dual-ring {
+  display: inline-block;
+  width: 80px;
+  height: 80px;
+}
+.lds-dual-ring:after {
+  content: " ";
+  display: block;
+  width: 64px;
+  height: 64px;
+  margin: 8px;
+  border-radius: 50%;
+  border: 6px solid #fff;
+  border-color: #fff transparent #fff transparent;
+  animation: lds-dual-ring 1.2s linear infinite;
+}
+@keyframes lds-dual-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+.btn {
+  cursor: pointer;
+  align-self: flex-end;
+  padding: 0.5rem 2rem;
+  border-radius: 2rem;
+  border: 1px solid var(--dark);
+  font-size: 1.8rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  background: linear-gradient(
+    to right,
+    var(--accent-pink),
+    var(--accent-purple)
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  transition: transform 0.2s ease-out;
+}
+.btn:hover {
+  transform: scale(1.1);
+}
 </style>
