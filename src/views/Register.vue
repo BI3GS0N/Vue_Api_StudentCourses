@@ -44,7 +44,11 @@
         />
         <i class="fas fa-lock"></i>
       </label>
-      <button @click="register">SUBMIT</button>
+      <div class="action-wrapper">
+        <button @click="register">SUBMIT</button>
+        <div class="lds-dual-ring" v-if="loading"></div>
+        <p v-show="message" class="message">{{ message }}</p>
+      </div>
     </form>
   </div>
 </template>
@@ -60,23 +64,34 @@ export default {
       indexNumber: "",
       password: "",
       confirmPassword: "",
+      loading: false,
+      message: "",
     };
   },
   methods: {
     async register(e) {
+      this.loading = true;
       e.preventDefault();
-      const res = await axios.post(
-        "https://zaliczenie.btry.eu/api/Auth/Register",
-        {
-          email: this.email,
-          firstName: this.firstName,
-          indexNumber: this.indexNumber,
-          password: this.password,
-          confirmPassword: this.confirmPassword,
-        }
-      );
-      const data = await res.data;
-      console.log(data);
+      try {
+        const res = await axios.post(
+          "https://zaliczenie.btry.eu/api/Auth/Register",
+          {
+            email: this.email,
+            firstName: this.firstName,
+            indexNumber: this.indexNumber,
+            password: this.password,
+            confirmPassword: this.confirmPassword,
+          }
+        );
+        const data = await res.data;
+        console.log(data);
+        this.loading = false;
+        this.message = "Success, please log in";
+      } catch (error) {
+        console.log(error.response.status);
+        this.loading = false;
+        this.message = "Error, Try Again";
+      }
     },
   },
 };

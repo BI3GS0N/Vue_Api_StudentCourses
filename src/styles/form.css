@@ -59,14 +59,20 @@
     transform: translateY(25%);
 }
 
+
+.login-wrapper .action-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 3rem;
+}
+
 .login-wrapper button {
     cursor: pointer;
     border-radius: 2rem;
-    align-self: flex-end;
     padding: 0.5rem 2rem;
     font-size: 1.8rem;
     letter-spacing: 2px;
-    margin-top: 3rem;
     background: linear-gradient(to right,
             var(--accent-pink),
             var(--accent-purple));
@@ -79,4 +85,31 @@
 
 .login-wrapper button:hover {
     transform: scale(0.95);
+}
+
+.login-wrapper .action-wrapper p {
+    color: var(--dark);
+    font-size: 1.3rem;
+}
+
+.login-wrapper .lds-dual-ring:after {
+    content: " ";
+    display: block;
+    width: 20px;
+    height: 20px;
+    margin: 8px;
+    border-radius: 50%;
+    border: 6px solid #fff;
+    border-color: var(--dark) transparent var(--dark) transparent;
+    animation: lds-dual-ring 1.2s linear infinite;
+}
+
+@keyframes lds-dual-ring {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
 }

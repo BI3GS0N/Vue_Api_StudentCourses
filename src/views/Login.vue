@@ -15,7 +15,11 @@
         />
         <i class="fas fa-lock"></i>
       </label>
-      <button @click="login">SUBMIT</button>
+      <div class="action-wrapper">
+        <button @click="login">SUBMIT</button>
+        <div class="lds-dual-ring" v-if="loading"></div>
+        <p v-show="message" class="message">{{ message }}</p>
+      </div>
     </form>
   </div>
 </template>
@@ -28,22 +32,32 @@ export default {
     return {
       email: "",
       password: "",
+      loading: false,
+      message: "",
     };
   },
   methods: {
     async login(e) {
+      this.loading = true;
       e.preventDefault();
-      const res = await axios.post(
-        "https://zaliczenie.btry.eu/api/Auth/Login",
-        {
-          email: this.email,
-          password: this.password,
+      try {
+        const res = await axios.post(
+          "https://zaliczenie.btry.eu/api/Auth/Login",
+          {
+            email: this.email,
+            password: this.password,
+          }
+        );
+        const data = await res.data;
+        localStorage.setItem("token", data.message);
+        if (res.status == 200) {
+          this.loading = false;
+          this.$router.push("/");
         }
-      );
-      const data = await res.data;
-      localStorage.setItem("token", data.message);
-      if (res.status == 200) {
-        this.$router.push("/");
+      } catch (error) {
+        console.log(error.response.status);
+        this.loading = false;
+        this.message = "Error, Try Again";
       }
     },
   },

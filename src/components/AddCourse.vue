@@ -20,7 +20,11 @@
         />
         <i class="fas fa-signature"></i>
       </label>
-      <button @click="addCourse">Submit</button>
+      <div class="action-wrapper">
+        <button @click="addCourse">SUBMIT</button>
+        <div class="lds-dual-ring" v-if="loading"></div>
+        <p v-show="message" class="message">{{ message }}</p>
+      </div>
     </form>
   </div>
 </template>
@@ -33,29 +37,37 @@ export default {
     return {
       courseTitle: "",
       courseDescription: "",
+      loading: false,
+      message: "",
     };
   },
   methods: {
     async addCourse(e) {
+      this.loading = true;
       e.preventDefault();
       const token = localStorage.getItem("token");
 
       let formData = new FormData();
       formData.append("Title", this.courseTitle);
       formData.append("Description", this.courseDescription);
-
-      const res = await axios({
-        method: "post",
-        url: "https://zaliczenie.btry.eu/api/Course",
-        data: formData,
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      const data = await res.data;
-      const newCourse = data.record;
-      this.$emit("add-course", newCourse);
-      //   this.courses = [...this.courses, data.record];
+      try {
+        const res = await axios({
+          method: "post",
+          url: "https://zaliczenie.btry.eu/api/Course",
+          data: formData,
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        const data = await res.data;
+        const newCourse = data.record;
+        this.loading = false;
+        this.$emit("add-course", newCourse);
+      } catch (error) {
+        console.log(error.response.status);
+        this.loading = false;
+        this.message = "Error, Try Again";
+      }
     },
   },
 };
