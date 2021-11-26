@@ -1,5 +1,5 @@
 # studentcourses_api_vue
-
+## 👉[Live App](https://bi3gs0n.github.io/Vue_Api_StudentCourses) 👈
 ## Project setup
 ```
 npm install
