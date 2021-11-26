@@ -44,6 +44,7 @@ export default {
   methods: {
     async addCourse(e) {
       this.loading = true;
+      this.message = "";
       e.preventDefault();
       const token = localStorage.getItem("token");
 
@@ -62,6 +63,7 @@ export default {
         const data = await res.data;
         const newCourse = data.record;
         this.loading = false;
+        this.message = "Success";
         this.$emit("add-course", newCourse);
       } catch (error) {
         console.log(error.response.status);
@@ -73,5 +75,8 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+.login-wrapper {
+  margin-bottom: 3rem;
+}
 </style>

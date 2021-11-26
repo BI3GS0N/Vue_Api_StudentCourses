@@ -1,7 +1,7 @@
 <template>
   <header>
     <nav>
-      <a href="/"><h1>Student Courses API</h1></a>
+      <router-link to="/"><h1>Student Courses API</h1></router-link>
       <div class="btn-wrapper">
         <router-link class="btn btn--login" to="/login">Log In</router-link>
         <router-link class="btn btn--register" to="/register">

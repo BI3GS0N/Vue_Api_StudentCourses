@@ -1,25 +1,33 @@
 <template>
   <div class="list-wrapper">
     <div class="list list--courses">
-      <h3>Lista kursów:</h3>
+      <h3>Courses List:</h3>
       <ul>
         <li v-for:="course of courses">
-          <h4>{{ course.title }}</h4>
-          <p>{{ course.description }}</p>
-          <button @click="getExams(course)">egzaminy</button>
-          <button @click="toggleAddExam(course.id)">Dodaj egzamin</button>
+          <div class="list__info">
+            <h4>{{ course.title }}</h4>
+            <p>{{ course.description }}</p>
+          </div>
+          <div class="list__buttons">
+            <button @click="getExams(course)">Exams</button>
+            <button @click="toggleAddExam(course.id)">Add Exam</button>
+          </div>
         </li>
         <AddExam v-show="showAddExam" :courseId="selectedCourse" />
       </ul>
     </div>
 
     <div class="list list--exams">
-      <h3>Lista Egzaminów:</h3>
+      <h3>Exams List:</h3>
       <ul>
         <li v-for:="exam of exams">
-          <h4>{{ exam.description }}</h4>
-          <p>{{ exam.isPassed }}</p>
-          <button @click="passExam(exam)">Zdane</button>
+          <div class="list__">
+            <h4>{{ exam.description }}</h4>
+            <p>Passed: {{ exam.isPassed }}</p>
+          </div>
+          <div class="list__buttons">
+            <button @click="passExam(exam)">Pass exam</button>
+          </div>
         </li>
       </ul>
     </div>
@@ -72,11 +80,46 @@ export default {
 <style scoped>
 .list-wrapper {
   display: flex;
+  width: 100%;
 }
 .list {
   flex: 1;
 }
+
+h3 {
+  color: var(--accent-pink);
+}
+h4 {
+  margin-bottom: 0.5rem;
+  font-size: 1.8rem;
+}
 p {
   font-size: 1.3rem;
+}
+ul {
+  list-style: none;
+  position: relative;
+}
+li {
+  padding: 0.5rem;
+  display: flex;
+  justify-content: space-between;
+}
+.list__buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+.list__buttons button {
+  cursor: pointer;
+  padding: 0.5rem;
+  background: transparent;
+  border: 1px solid var(--dark);
+  border-radius: 2rem;
+  color: var(--accent-pink);
+  transition: transform 0.2s ease-out;
+}
+.list__buttons button:hover {
+  transform: scale(1.1);
 }
 </style>

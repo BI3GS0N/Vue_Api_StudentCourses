@@ -39,6 +39,7 @@ export default {
   methods: {
     async login(e) {
       this.loading = true;
+      this.message = "";
       e.preventDefault();
       try {
         const res = await axios.post(

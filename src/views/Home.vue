@@ -25,7 +25,6 @@ export default {
   data() {
     return {
       courses: [],
-      exams: [],
       loading: false,
       showAddCourse: false,
     };
@@ -37,20 +36,28 @@ export default {
     toggleAddCourse() {
       this.showAddCourse = !this.showAddCourse;
     },
+    async getCourses() {
+      try {
+        const res = await axios({
+          method: "get",
+          url: "https://zaliczenie.btry.eu/api/Course",
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        });
+        return res.data;
+      } catch (error) {
+        console.log(error);
+      }
+    },
   },
   async created() {
     if (this.isLogged) {
       this.loading = true;
-      const res = await axios({
-        method: "get",
-        url: "https://zaliczenie.btry.eu/api/Course",
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      });
-      const data = await res.data;
+      const data = await this.getCourses();
       this.courses = data.records;
       this.loading = false;
+      console.log("test");
     }
   },
   computed: {
@@ -61,6 +68,13 @@ export default {
 };
 </script>
 <style scoped>
+main {
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+}
+
 .lds-dual-ring {
   display: inline-block;
   width: 80px;
@@ -74,7 +88,7 @@ export default {
   margin: 8px;
   border-radius: 50%;
   border: 6px solid #fff;
-  border-color: #fff transparent #fff transparent;
+  border-color: var(--dark) transparent var(--dark) transparent;
   animation: lds-dual-ring 1.2s linear infinite;
 }
 @keyframes lds-dual-ring {
@@ -86,14 +100,14 @@ export default {
   }
 }
 .btn {
-  cursor: pointer;
-  align-self: flex-end;
-  padding: 0.5rem 2rem;
-  border-radius: 2rem;
-  border: 1px solid var(--dark);
+  width: 300px;
   font-size: 1.8rem;
   font-weight: 700;
   letter-spacing: 2px;
+  cursor: pointer;
+  padding: 0.5rem 2rem;
+  border-radius: 2rem;
+  border: 1px solid var(--dark);
   background: linear-gradient(
     to right,
     var(--accent-pink),
@@ -103,7 +117,7 @@ export default {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   transition: transform 0.2s ease-out;
-  margin: 0 auto;
+  margin-bottom: 3rem;
 }
 .btn:hover {
   transform: scale(1.1);
